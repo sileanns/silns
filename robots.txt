@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /journal/
+Allow: /guides/
+Allow: /labs/
+Allow: /about/
+Allow: /legal/
+Allow: /archive/
+Allow: /notes/
+Disallow: /content/
+Disallow: /help/
+Disallow: /account/
+Disallow: /legal/review
+Disallow: /copyright/
+Crawl-delay: 2

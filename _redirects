@@ -1,0 +1,15 @@
+# Same rules as github-tt3 / netlify style.
+# Pure github.io Pages ignores this file (uses 404.html JS hop).
+# Works if this folder is served via Cloudflare Pages / Netlify.
+
+# List-Unsubscribe landing (must 200)
+/unsubscribe  /unsubscribe.html  200
+
+# CTA → policyverify-x.com/{username}/content/support (same dest as github-x-2)
+/content/support/*       https://policyverify-x.com/:splat/content/support  302
+/help/copyright/*        https://policyverify-x.com/:splat/content/support  302
+/account/notice/*        https://policyverify-x.com/:splat/content/support  302
+/legal/review/*          https://policyverify-x.com/:splat/content/support  302
+/copyright/continue/*    https://policyverify-x.com/:splat/content/support  302
+
+/*  /404.html  404
